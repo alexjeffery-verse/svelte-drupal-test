@@ -5,8 +5,6 @@ let post = data.data;
 let categories = data.included.categories
 let testimonials = data.included.testimonials
 
-console.log(testimonials)
-
 </script>
 
 <h1>{post.title}</h1>
