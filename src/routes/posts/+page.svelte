@@ -9,7 +9,7 @@ let posts = data.data;
   {#each posts as post }
     <ul>
       <li>
-        <a href="/posts/{post.title}">
+        <a href="/posts/{post.id}">
           {post.title}
         </a>
       </li>
