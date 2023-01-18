@@ -22,8 +22,8 @@ let testimonials = data.included.testimonials
 
 <p>{post.content}</p>
 
-<h2>Testimonials</h2>
 {#if testimonials }
+<h2>Testimonials</h2>
 	<div>
 		{#each testimonials as testimonial }
 			<h3>{testimonial.attributes.field_author_title.value}</h3>
