@@ -2,7 +2,8 @@
 
 <div>
     <a href='/posts'>See all the posts</a>
-    <a href='/discussions'>See all the discussions</a>  
+    <a href='/discussions'>See all the discussions</a>
+    <a href='/people'>See all the people</a>
 </div>
 
 
