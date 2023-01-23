@@ -1,20 +1,18 @@
 let data;
-const fetchData = fetch("http://localhost:8888/web/jsonapi/node/post",{})
-    .then(response => response.json())
-    .then(res => {
-        data = res.data.map(({ id, attributes: { title , body: { value } } }) => {
-            return {
-              id,
-              title,
-              value
-            };
-          });
+
+export async function load( { fetch } ) {
+  let request = "http://localhost:8888/web/jsonapi/node/post";
+  request += "?page[limit]=10";
+  
+  const fetchData = await fetch( request, {} )
+    .then( response => response.json() )
+    .then( res => {
+      data = res
     })
     .catch(error => {
     console.log(error);
     return [];
-});
+  });
 
-export function load() {
-   return {data};
-};
+  return data 
+}
