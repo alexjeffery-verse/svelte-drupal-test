@@ -1,23 +1,16 @@
 <script>
   import { onMount } from 'svelte';
-  import { posts } from '../../stores/posts'
   export let data;
 
   let newBatchData = [];
-
-  let initialPosts = data.data
-
+  let posts = data.data;
+  let link = data.links.next.href;
   let scroll;
-  
-  posts.set({ 
-    postData: initialPosts,
-    link: data.links.next.href
-  })
 
   onMount(() => {
 			const handleIntersect = (entries) => {
 				entries.forEach((entry) => {
-          if ( $posts.link !== 'end of posts' ) {
+          if ( link !== 'end of posts' ) {
             fetchMorePosts();
           }
 				});
@@ -28,9 +21,8 @@
 		
 	});
 
-  $: fetchMorePosts;
   async function fetchMorePosts() {
-		const response = await fetch($posts.link)
+		const response = await fetch(link)
     .then( response => response.json() )
     .then( res => {
 
@@ -38,12 +30,12 @@
 
       if ( res.links.next !== undefined ) {
         let newLink = res.links.next.href
-        $posts.link = newLink;
+        link = newLink;
       } else {
-        $posts.link = 'end of posts'
+        link = 'end of posts'
       }
         
-      $posts.postData = [ ...$posts.postData, ...newBatchData ];
+      posts = [ ...posts, ...newBatchData ];
 
     })
     .catch(error => {
@@ -63,9 +55,9 @@
 
 <h1>All Posts</h1>
 
-{#if $posts.postData }
+{#if posts }
   <ul>
-    {#each $posts.postData as post }
+    {#each posts as post }
     <li>
       <a href="/posts/{post.id}">
         {post.attributes.title}
