@@ -1,5 +1,6 @@
 <script>
 import { createForm } from "svelte-forms-lib";
+import { goto } from '$app/navigation';
 
 const { form, handleChange, handleSubmit } = createForm({
     initialValues: {
@@ -37,8 +38,8 @@ function createPost() {
     })
     .then( response => response.json() )
     .then( res => { 
-            let newCreatedPostId = res.data.id
-            window.location.href = '/posts/' + newCreatedPostId;
+            let newCreatedPostId = res.data.id;
+            goto( "/posts/" + newCreatedPostId );
         }
     )
     .catch(error => {
