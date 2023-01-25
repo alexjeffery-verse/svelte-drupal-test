@@ -1,5 +1,7 @@
 <script>
   import { onMount } from 'svelte';
+  import {flip} from 'svelte/animate';
+
   export let data;
 
   let newBatchData = [];
@@ -45,6 +47,30 @@
    
   }
 
+  // sort posts
+  async function sortPosts(type){
+    let link = "http://localhost:8888/web/jsonapi/node/post";
+
+    switch (type){
+      case "title":
+        link += "?sort=title";
+      break;
+      case "date":
+        link += "?sort=created";
+      break;
+    }
+
+    const response = await fetch(link)
+      .then( response => response.json() )
+      .then( res => {
+        posts = res.data
+      })
+      .catch(error => {
+      console.log(error);
+      return [];
+      })
+  }
+
 </script>
 
 <style>
@@ -54,11 +80,13 @@
 </style>
 
 <h1>All Posts</h1>
+<button on:click={() => sortPosts( "title" )}>Sort by Title</button>
+<button on:click={() => sortPosts( "date" )}>Sort by Date</button>
 
 {#if posts }
   <ul>
-    {#each posts as post }
-    <li>
+    {#each posts as post (post) }
+    <li animate:flip="{{duration: 200}}">
       <a href="/posts/{post.id}">
         {post.attributes.title}
       </a>
