@@ -1,4 +1,5 @@
 let data;
+let id;
 let includes;
 let filteredCategories;
 let testimonials;
@@ -11,6 +12,7 @@ export async function load( { fetch, params } ) {
   const fetchData = await fetch( request, {} )
     .then( response => response.json() )
     .then( res => {
+      id = res.data.id;
       data = res.data;
       includes = res.included;
 
@@ -32,6 +34,7 @@ export async function load( { fetch, params } ) {
   });
 
   return {
+    id: id,
     data: {
       title: data.attributes.title,
       content: data.attributes.body.value
