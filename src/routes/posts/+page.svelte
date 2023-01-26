@@ -8,6 +8,7 @@
   let posts = data.data;
   let link = data.links.next.href;
   let scroll;
+  let moduleMessage;
 
   onMount(() => {
 			const handleIntersect = (entries) => {
@@ -20,6 +21,21 @@
 			const options = { threshold: 0.5 };
 			const observer = new IntersectionObserver(handleIntersect, options);
 			observer.observe(scroll);
+
+
+      // Custom module API request
+
+      let moduleRequest = "http://localhost:8888/web/sveltekitmodule/api";
+      
+      const fetchData = fetch( moduleRequest, {} )
+        .then( response => response.json() )
+        .then( res => {
+          moduleMessage = res
+        })
+        .catch(error => {
+        console.log(error);
+        return [];
+      });
 		
 	});
 
@@ -80,6 +96,9 @@
 </style>
 
 <h1>All Posts</h1>
+
+<h2>{moduleMessage}</h2>
+
 <button on:click={() => sortPosts( "title" )}>Sort by Title</button>
 <button on:click={() => sortPosts( "date" )}>Sort by Date</button>
 
