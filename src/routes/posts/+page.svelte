@@ -85,7 +85,7 @@
 
 {#if posts }
   <ul>
-    {#each posts as post (post) }
+    {#each posts as post (post.id) }
     <li animate:flip="{{duration: 200}}">
       <a href="/posts/{post.id}">
         {post.attributes.title}
